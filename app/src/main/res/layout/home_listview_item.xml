@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:round="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dark_level3"
+    >
+
+
+    <com.xiaxiao.riji.customview.roundcorner.RoundCornerImageView
+        android:id="@+id/user_head_img"
+        android:layout_width="@dimen/user_head_size"
+        android:layout_height="@dimen/user_head_size"
+        android:scaleType="centerCrop"
+        android:src="@drawable/xx"
+        round:cornerRadius="@dimen/user_head_radius"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        />
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/user_head_size"
+        android:text="1111:11:11:11"
+        android:textSize="14sp"
+        android:textColor="@color/dark_level2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="bottom"
+        />
+
+    <LinearLayout
+        android:id="@+id/title_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/user_head_size"
+        android:layout_toRightOf="@id/user_head_img"
+        android:layout_marginLeft="4dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:id="@+id/name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wode name"
+            android:textSize="16sp"
+            android:textColor="@color/dark_leve11"
+            />
+        <TextView
+            android:id="@+id/name2_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="wode name"
+            android:textSize="14sp"
+            android:textColor="@color/dark_level2"
+            />
+        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/content_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/card_height"
+        android:orientation="horizontal"
+        android:layout_below="@id/title_ll"
+        android:layout_marginLeft="@dimen/user_head_size"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="1dp"
+        android:background="@drawable/whrite_solid_bg"
+        >
+        <TextView
+            android:id="@+id/content_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="wode namewode namewode namewode name"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="4dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:textColor="@color/dark_level2"
+            />
+        <com.xiaxiao.riji.customview.roundcorner.RoundCornerImageView
+            android:id="@+id/title_img"
+            android:layout_width="@dimen/card_height"
+            android:layout_height="@dimen/card_height"
+            round:cornerRadius_right_top="4dp"
+            round:cornerRadius_right_bottom="4dp"
+            android:src="@drawable/xx"
+            android:scaleType="centerCrop"
+            />
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/like_img"
+        android:layout_width="@dimen/user_head_size_level2"
+        android:layout_height="@dimen/user_head_size_level2"
+        android:layout_below="@id/content_ll"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/tab3"
+        android:padding="4dp"
+        />
+
+    <!--<TextView
+        android:id="@+id/bottom_tab_item_tv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:text="tab1"
+        android:textSize="18sp"
+        />-->
+<FrameLayout
+    android:id="@+id/frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/like_img"
+    android:background="@color/dark_level3"
+    ></FrameLayout>
+</RelativeLayout>

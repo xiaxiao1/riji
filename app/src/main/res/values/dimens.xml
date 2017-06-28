@@ -1,0 +1,16 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="comment_view_btn_width">58dp</dimen>
+    <dimen name="comment_view_height">32dp</dimen>
+    <dimen name="bottom_tab_img_size">32dp</dimen>
+    <dimen name="bottom_tab_height">52dp</dimen>
+    <dimen name="dialog_width">360dp</dimen>
+    <dimen name="bannerview_dot_size">16dp</dimen>
+    <dimen name="user_head_size">48dp</dimen>
+    <dimen name="user_head_radius">24dp</dimen>
+    <dimen name="card_height">140dp</dimen>
+    <dimen name="user_head_size_level2">32dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+</resources>
