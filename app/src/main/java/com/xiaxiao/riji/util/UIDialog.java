@@ -1,12 +1,18 @@
 package com.xiaxiao.riji.util;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.xiaxiao.riji.Listener.RiJiCallback;
 import com.xiaxiao.riji.R;
 
 
@@ -173,5 +179,36 @@ public class UIDialog {
 
     public interface CustomDialogListener{
         public void onItemClick(int index);
+    }
+
+    public static Dialog showAddWorkItem(Context context, final RiJiCallback riJiCallback) {
+        final Dialog dialog = new Dialog(context);
+        View v = LayoutInflater.from(context).inflate(R.layout.add_work_item, null);
+
+        final EditText editText = (EditText) v.findViewById(R.id.edit_et);
+        Button button = (Button) v.findViewById(R.id.ok_btn);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 String mes = editText.getText().toString().trim();
+                if (!mes.equals("")) {
+                    dialog.dismiss();
+                    riJiCallback.handle(mes);
+                }
+            }
+        });
+
+        dialog.setContentView(v);
+        dialog.getWindow().getDecorView().setLayoutParams(new ViewGroup.LayoutParams(ViewGroup
+                .LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        dialog.show();
+
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
+
+        return dialog;
     }
 }

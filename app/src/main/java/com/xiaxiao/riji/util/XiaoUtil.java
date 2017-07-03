@@ -26,7 +26,10 @@ import com.xiaxiao.riji.R;
 import com.xiaxiao.riji.customview.BaseActivity;
 
 import java.io.File;
+import java.text.Format;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -282,7 +285,7 @@ public class XiaoUtil {
     public static String getFormatCurrentTime(String formatType) {
         SimpleDateFormat format;
         if (formatType.isEmpty()) {
-            format= new SimpleDateFormat("yyyy.MM.dd HH:mm");
+            format= new SimpleDateFormat("yyyy.MM.dd");
         } else {
             format = new SimpleDateFormat(formatType);
         }
@@ -290,6 +293,30 @@ public class XiaoUtil {
         return format.format(now);
 
 
+    }
+
+    public static Date getToday() {
+        SimpleDateFormat format= new SimpleDateFormat("yyyy.MM.dd");
+
+        Date now = new Date();
+        String s= format.format(now);
+        return format(s);
+    }
+    public static String format(Date date) {
+        Format format= new SimpleDateFormat("yyyy.MM.dd ");
+        return format.format(date);
+    }
+
+    public static Date format(String dateStr) {
+        Format f= new SimpleDateFormat("yyyy.MM.dd");
+        Date dd=null;
+        try {
+            dd=(Date)f.parseObject(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return dd;
     }
 
 

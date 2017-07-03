@@ -9,6 +9,17 @@
     android:layout_height="match_parent"
     tools:context="com.xiaxiao.riji.activity.home.HomeActivity">
 
+    <TextView
+        android:id="@+id/past_time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="往事"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="4dp"
+        android:layout_marginTop="4dp"
+        android:padding="16dp"
+        />
 
     <com.xiaxiao.riji.customview.roundcorner.RoundCornerImageView
 

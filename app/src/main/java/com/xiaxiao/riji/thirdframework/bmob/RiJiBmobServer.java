@@ -2,89 +2,120 @@ package com.xiaxiao.riji.thirdframework.bmob;
 
 import android.content.Context;
 
+import com.xiaxiao.riji.bean.DayWork;
+import com.xiaxiao.riji.bean.WorkItem;
 import com.xiaxiao.riji.util.UIDialog;
 
+import java.util.List;
+
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 /**
  * Created by xiaxi on 2016/11/3.
  */
-public class BmobServer {
+public class RiJiBmobServer {
 
     BmobListener mSuccessListener;
     BmobListener mErrorListener;
     BmobQuery mBmobQuery;
     UIDialog waitdialog;
     boolean enableDialog=true;
+    Context context;
 
-    public static final int BOOKTYPE_HAVE=1;
-    public static final int BOOKTYPE_NO_HAVE=0;
-    public static final int BOOKTYPE_ALL=-1;
-    protected BmobServer(Context context) {
+    public RiJiBmobServer(Context context) {
+        this.context = context;
     }
 
-    /*public static Builder build(Context context) {
-        return new Builder(context);
-    }*/
-    public static class Builder{
-        BmobServer bmobServer;
-        Context mContext;
 
-        public Builder(Context context) {
-            bmobServer = new BmobServer(context);
-            this.mContext = context;
 
-        }
 
-        /**
-         * add errorListener for the request
-         * @param errorListener
-         * @return
-         */
-        public Builder addErrorListener(ErrorListener errorListener){
-            bmobServer.mErrorListener = errorListener;
-            return this;
-        }
+    public void addDayWork(final DayWork dayWork,BmobListener bmobListener) {
+        addListener(bmobListener);
+//        showWaitDialog();
+        dayWork.save(new SaveListener<String>() {
+            @Override
+            public void done(String objectId, BmobException e) {
+//                dismissWaitDialog();
+                if (e == null) {
+                    handleSuccess(objectId);
+                } else {
+                    handleError(e);
+                }
 
-        /**
-         * add successListener for the request
-         * @param successListener
-         * @return
-         */
-        public Builder addSuccessListener(SuccessListener successListener) {
-            bmobServer.mSuccessListener = successListener;
-            return this;
-        }
+            }
+        });
+    }
 
-        /**
-         * add full listener for the request
-         * @param bmobListener
-         * @return
-         */
-        public Builder addBmobListener(BmobListener bmobListener) {
-            bmobServer.addListener(bmobListener);
-            return this;
-        }
+    public void updateDayWork(final DayWork dayWork, BmobListener bmobListener) {
+        addListener(bmobListener);
+        dayWork.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                handleResult(dayWork, e);
+            }
+        });
+    }
 
-        /**
-         * add query terms for the requset
-         * @param bmobQuery
-         * @return
-         */
-        public Builder addBmobQuery(BmobQuery bmobQuery) {
-            bmobServer.mBmobQuery = bmobQuery;
-            return this;
+    public void getMyDayWorks(int limit,BmobListener bmobListener) {
+        addListener(bmobListener);
+        BmobQuery<DayWork> query = new BmobQuery<>();
+        query.order("-createdAt");
+        if (limit>0) {
+            query.setLimit(limit);
         }
-        public Builder enableDialog(boolean enableDialog) {
-            bmobServer.enableDialog=enableDialog;
-            return this;
-        }
-        public  BmobServer build() {
-            bmobServer.waitdialog = new UIDialog(mContext);
-            return bmobServer;
+        query.findObjects(new FindListener<DayWork>() {
+            @Override
+            public void done(List<DayWork> list, BmobException e) {
+                if (e == null) {
+                    handleSuccess(list);
+                } else {
+                    handleError(e);
+                }
+            }
+        });
+    }
+
+
+    public void addWorkItem(WorkItem workItem, BmobListener b) {
+        addListener(b);
+        workItem.save(new SaveListener<String>() {
+            @Override
+            public void done(String s, BmobException e) {
+                handleResult(s,e);
+            }
+        });
+
+    }
+
+    public void findWorkItems(DayWork dayWork, BmobListener bmobListener) {
+        addListener(bmobListener);
+        BmobQuery<WorkItem> query = new BmobQuery<>();
+        query.order("createdAt");
+        query.addWhereRelatedTo("workItems", new BmobPointer(dayWork));
+        query.findObjects(new FindListener<WorkItem>() {
+            @Override
+            public void done(List<WorkItem> list, BmobException e) {
+                handleResult(list, e);
+            }
+        });
+//
+    }
+
+
+    public void handleResult(Object obj, BmobException e) {
+        if (e == null) {
+            handleSuccess(obj);
+        } else {
+            handleError(e);
         }
     }
+
 /*
 
 

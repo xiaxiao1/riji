@@ -77,7 +77,8 @@
         </activity>
         <activity android:name=".activity.TodayWorkActivity">
         </activity>
-        <activity android:name=".activity.home.HomeActivity">
+
+        <activity android:name=".activity.home.DayWorksActivity">
         </activity>
     </application>
 

@@ -3,6 +3,7 @@ package com.xiaxiao.riji.bean;
 import java.util.ArrayList;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobRelation;
 
 /**
  * Created by xiaxiao on 2017/6/23.
@@ -18,7 +19,7 @@ public class DayWork extends BmobObject {
     String note;
 
 
-    ArrayList<WorkItem> workItems;
+    BmobRelation workItems;
 
     //完成度
     String progress;
@@ -47,11 +48,11 @@ public class DayWork extends BmobObject {
         this.note = note;
     }
 
-    public ArrayList<WorkItem> getWorkItems() {
+    public BmobRelation getWorkItems() {
         return workItems;
     }
 
-    public void setWorkItems(ArrayList<WorkItem> workItems) {
+    public void setWorkItems(BmobRelation workItems) {
         this.workItems = workItems;
     }
 

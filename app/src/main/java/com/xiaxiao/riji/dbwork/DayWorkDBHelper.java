@@ -71,7 +71,8 @@ public class DayWorkDBHelper extends SQLiteOpenHelper{
             return false;
         }
 
-        return addWorkItems(dayWork.getWorkItems());
+//        return addWorkItems(dayWork.getWorkItems());
+        return false;
     }
 
     /**
@@ -164,7 +165,6 @@ public class DayWorkDBHelper extends SQLiteOpenHelper{
     */
 /**
      * 模糊查询某一本书
-     * @param bookName
      * @return
      *//*
 

@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.xiaxiao.riji.R;
 import com.xiaxiao.riji.runtimepermission.RuntimePermissionsManager;
+import com.xiaxiao.riji.thirdframework.bmob.RiJiBmobServer;
 
 public abstract  class BaseActivity extends AppCompatActivity {
     private LinearLayout parentLinearLayout;//把父类activity和子类activity的view都add到这里
@@ -18,10 +19,12 @@ public abstract  class BaseActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RuntimePermissionsManager runtimePermissionsManager;
     public static Context mContext;
+    public RiJiBmobServer riJiBmobServer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        riJiBmobServer = new RiJiBmobServer(this);
         initContentView();
     }
 
@@ -147,5 +150,9 @@ public abstract  class BaseActivity extends AppCompatActivity {
             grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         runtimePermissionsManager.handle(requestCode, permissions, grantResults);
+    }
+
+    public RiJiBmobServer getBmobServer() {
+        return riJiBmobServer;
     }
 }

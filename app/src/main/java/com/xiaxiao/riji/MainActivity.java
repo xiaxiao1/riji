@@ -17,7 +17,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+useBmob();
 
     }
 
@@ -37,10 +37,8 @@ public class MainActivity extends BaseActivity {
     }
 
     public void useBmob() {
-          BmobIniter.init(getApplicationContext());
-        // 使用推送服务时的初始化操作
-        BmobInstallation.getCurrentInstallation().save();
-        // 启动推送服务
-        BmobPush.startWork(this);
+        BmobIniter.init(getApplicationContext());
+        BmobIniter.initPush(getApplicationContext());
+
     }
 }
