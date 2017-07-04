@@ -22,7 +22,7 @@ android:background="@color/dark_level3"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:padding="16dp"
-
+        android:alpha="0.9"
         android:src="@drawable/add_workitem"
         android:background="@drawable/finish_work_on_bg"
         android:layout_alignParentRight="true"

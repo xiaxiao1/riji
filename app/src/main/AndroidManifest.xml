@@ -39,8 +39,7 @@
         <!-- 用于进程保活 -->
         <service
             android:name="cn.bmob.push.lib.service.PushNotifyService"
-            android:process=":bmobpush">
-        </service>
+            android:process=":bmobpush" />
 
         <receiver android:name="cn.bmob.push.PushReceiver">
             <intent-filter>
@@ -61,25 +60,24 @@
             </intent-filter>
         </receiver>
 
-        <!-- 接收心跳和唤醒的广播，要和PushService运行在同个进程 --><receiver
-        android:name="cn.bmob.push.PushNotifyReceiver"
-        android:process=":bmobpush">
-        <intent-filter>
+        <!-- 接收心跳和唤醒的广播，要和PushService运行在同个进程 -->
+        <receiver
+            android:name="cn.bmob.push.PushNotifyReceiver"
+            android:process=":bmobpush">
+            <intent-filter>
 
-            <!-- 接收心跳广播的action -->
-            <action android:name="cn.bmob.push.action.HEARTBEAT" />
-            <!-- 接收唤醒广播的action -->
-            <action android:name="cn.bmob.push.action.NOTIFY" />
-        </intent-filter>
-    </receiver>
+                <!-- 接收心跳广播的action -->
+                <action android:name="cn.bmob.push.action.HEARTBEAT" />
+                <!-- 接收唤醒广播的action -->
+                <action android:name="cn.bmob.push.action.NOTIFY" />
+            </intent-filter>
+        </receiver>
 
-        <activity android:name=".activity.home.HomeActivity">
-        </activity>
-        <activity android:name=".activity.TodayWorkActivity">
-        </activity>
-
-        <activity android:name=".activity.home.DayWorksActivity">
-        </activity>
+        <activity android:name=".activity.home.HomeActivity" />
+        <activity android:name=".activity.TodayWorkActivity" />
+        <activity android:name=".activity.home.DayWorksActivity" />
+        <activity android:name=".activity.home.RiJiStartUpActivity" />
+        <activity android:name=".activity.home.LoginActivity"></activity>
     </application>
 
 </manifest>

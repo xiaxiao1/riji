@@ -111,6 +111,13 @@ public class TodayWorkActivity extends BaseActivity {
                     } else {
                         workItemAdapter.update(workItemList);
                     }
+                    /*int f = 0;
+                    for (WorkItem w : workItemList) {
+                        if (w.getFinish()==WorkItem.WORK_ITEM_STATE_FINISH) {
+                            f++;
+                        }
+                    }
+                    setRig*/
                 }
                 stopRefresh();
             }

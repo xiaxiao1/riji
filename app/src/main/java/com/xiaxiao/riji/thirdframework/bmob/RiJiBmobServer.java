@@ -1,14 +1,18 @@
 package com.xiaxiao.riji.thirdframework.bmob;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.xiaxiao.riji.bean.DayWork;
+import com.xiaxiao.riji.bean.RiJiUser;
 import com.xiaxiao.riji.bean.WorkItem;
 import com.xiaxiao.riji.util.UIDialog;
+import com.xiaxiao.riji.util.XiaoUtil;
 
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
@@ -110,6 +114,27 @@ public class RiJiBmobServer {
 //
     }
 
+    public void register(RiJiUser riJiUser, final BmobListener bmobListener) {
+        riJiUser.signUp(new SaveListener<RiJiUser>() {
+            @Override
+            public void done(RiJiUser s, BmobException e) {
+                handleResult(s,e,bmobListener);
+            }
+        });
+    }
+
+    public void login(RiJiUser riJiUser, final BmobListener bmobListener) {
+        riJiUser.login(new SaveListener<RiJiUser>() {
+            @Override
+            public void done(RiJiUser s, BmobException e) {
+                handleResult(s,e,bmobListener);
+            }
+        });
+    }
+
+    public RiJiUser getLocalUser() {
+        return BmobUser.getCurrentUser(RiJiUser.class);
+    }
 
     public void handleResult(Object obj, BmobException e,BmobListener bmobListener) {
         if (e == null) {
