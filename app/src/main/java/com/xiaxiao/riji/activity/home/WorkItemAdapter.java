@@ -18,9 +18,13 @@ import java.util.List;
 
 public class WorkItemAdapter extends MyAdapter {
     private static HashMap<Integer, String> statusMap = new HashMap<>();
+    private static HashMap<Integer, Integer> statusBgMap = new HashMap<>();
     static{
-        statusMap.put(1, "已完成");
-        statusMap.put(0, "没做完");
+        statusMap.put(WorkItem.WORK_ITEM_STATE_FINISH, "完成");
+        statusMap.put(WorkItem.WORK_ITEM_STATE_UNFINISH, "未完成");
+
+        statusBgMap.put(WorkItem.WORK_ITEM_STATE_FINISH, R.drawable.finish_work_on_bg);
+        statusBgMap.put(WorkItem.WORK_ITEM_STATE_UNFINISH, R.drawable.finish_work_off_bg);
     }
     public WorkItemAdapter(Context context, List list) {
         super(context, list);
@@ -38,9 +42,11 @@ public class WorkItemAdapter extends MyAdapter {
             holder = (Holder)convertView.getTag();
         }
 
-        holder.index_tv.setText("第"+(position+1)+"个项目");
+        holder.index_tv.setText(""+(position+1));
+        holder.time_tv.setText(workItem.getCreatedAt());
         holder.work_tv.setText(workItem.getWork());
         holder.status_tv.setText(statusMap.get(workItem.getFinish()));
+        holder.status_tv.setBackgroundResource(statusBgMap.get(workItem.getFinish()));
 
         return convertView;
     }
@@ -49,11 +55,13 @@ public class WorkItemAdapter extends MyAdapter {
         TextView index_tv;
         TextView work_tv;
         TextView status_tv;
+        TextView time_tv;
 
         public Holder(View view) {
             index_tv = (TextView)   view.findViewById(R.id.index_tv);
             work_tv = (TextView)    view.findViewById(R.id.work_tv);
             status_tv = (TextView)  view.findViewById(R.id.status_tv);
+            time_tv = (TextView)  view.findViewById(R.id.item_time_tv);
         }
 
     }

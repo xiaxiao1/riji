@@ -14,12 +14,15 @@
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         />
     <ImageView android:layout_width="16dp"
         android:layout_height="16dp"
         android:src="@drawable/tab3_off"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:visibility="gone"
         />
 
 </RelativeLayout>

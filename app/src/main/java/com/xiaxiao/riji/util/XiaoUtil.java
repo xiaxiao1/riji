@@ -298,7 +298,8 @@ public class XiaoUtil {
     public static Date getToday() {
         SimpleDateFormat format= new SimpleDateFormat("yyyy.MM.dd");
 
-        Date now = new Date();
+//        Date now = new Date();
+        Date now=Calendar.getInstance().getTime();
         String s= format.format(now);
         return format(s);
     }

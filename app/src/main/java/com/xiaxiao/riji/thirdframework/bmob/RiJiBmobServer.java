@@ -21,8 +21,8 @@ import cn.bmob.v3.listener.UpdateListener;
  */
 public class RiJiBmobServer {
 
-    BmobListener mSuccessListener;
-    BmobListener mErrorListener;
+    /*BmobListener mSuccessListener;
+    BmobListener mErrorListener;*/
     BmobQuery mBmobQuery;
     UIDialog waitdialog;
     boolean enableDialog=true;
@@ -35,84 +35,87 @@ public class RiJiBmobServer {
 
 
 
-    public void addDayWork(final DayWork dayWork,BmobListener bmobListener) {
-        addListener(bmobListener);
+    public void addDayWork(final DayWork dayWork, final BmobListener bmobListener) {
+//        addListener(bmobListener);
 //        showWaitDialog();
         dayWork.save(new SaveListener<String>() {
             @Override
             public void done(String objectId, BmobException e) {
 //                dismissWaitDialog();
-                if (e == null) {
-                    handleSuccess(objectId);
-                } else {
-                    handleError(e);
-                }
+                handleResult(objectId, e,bmobListener);
 
             }
         });
     }
 
-    public void updateDayWork(final DayWork dayWork, BmobListener bmobListener) {
-        addListener(bmobListener);
+    public void updateDayWork(final DayWork dayWork, final BmobListener bmobListener) {
+//        addListener(bmobListener);
         dayWork.update(new UpdateListener() {
             @Override
             public void done(BmobException e) {
-                handleResult(dayWork, e);
+                handleResult(dayWork, e,bmobListener);
             }
         });
     }
 
-    public void getMyDayWorks(int limit,BmobListener bmobListener) {
-        addListener(bmobListener);
+    public void getMyDayWorks(int limit, final BmobListener bmobListener) {
+//        addListener(bmobListener);
         BmobQuery<DayWork> query = new BmobQuery<>();
         query.order("-createdAt");
+//        query.include("workItems"); include can not use with BmobRelation
         if (limit>0) {
             query.setLimit(limit);
         }
         query.findObjects(new FindListener<DayWork>() {
             @Override
             public void done(List<DayWork> list, BmobException e) {
-                if (e == null) {
-                    handleSuccess(list);
-                } else {
-                    handleError(e);
-                }
+                handleResult(list,e,bmobListener);
             }
         });
     }
 
 
-    public void addWorkItem(WorkItem workItem, BmobListener b) {
-        addListener(b);
+    public void addWorkItem(WorkItem workItem, final BmobListener b) {
+//        addListener(b);
         workItem.save(new SaveListener<String>() {
             @Override
             public void done(String s, BmobException e) {
-                handleResult(s,e);
+                handleResult(s,e,b);
             }
         });
 
     }
 
-    public void findWorkItems(DayWork dayWork, BmobListener bmobListener) {
-        addListener(bmobListener);
+    public void updateWorkItem(final WorkItem workItem, final BmobListener bmobListener) {
+//        addListener(bmobListener);
+        workItem.update(new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                handleResult(workItem, e,bmobListener);
+            }
+        });
+    }
+
+    public void findWorkItems(DayWork dayWork, final BmobListener bmobListener) {
+//        addListener(bmobListener);
         BmobQuery<WorkItem> query = new BmobQuery<>();
         query.order("createdAt");
         query.addWhereRelatedTo("workItems", new BmobPointer(dayWork));
         query.findObjects(new FindListener<WorkItem>() {
             @Override
             public void done(List<WorkItem> list, BmobException e) {
-                handleResult(list, e);
+                handleResult(list, e,bmobListener);
             }
         });
 //
     }
 
 
-    public void handleResult(Object obj, BmobException e) {
+    public void handleResult(Object obj, BmobException e,BmobListener bmobListener) {
         if (e == null) {
-            handleSuccess(obj);
+            handleSuccess(obj,bmobListener);
         } else {
-            handleError(e);
+            handleError(e,bmobListener);
         }
     }
 
@@ -768,19 +771,19 @@ public class RiJiBmobServer {
     //*******************************************************************************************//
 
 
-    protected void addListener(BmobListener bmobListener) {
+    /*protected void addListener(BmobListener bmobListener) {
         mSuccessListener=bmobListener;
         mErrorListener=bmobListener;
-    }
+    }*/
 
-    protected void handleSuccess(Object object) {
-        if (mSuccessListener!=null) {
-            mSuccessListener.onSuccess(object);
+    protected void handleSuccess(Object object,BmobListener bmobListener) {
+        if (bmobListener!=null) {
+            bmobListener.onSuccess(object);
         }
     }
-    protected void handleError(BmobException e) {
-        if (mErrorListener!=null) {
-            mErrorListener.onError(e);
+    protected void handleError(BmobException e,BmobListener bmobListener) {
+        if (bmobListener!=null) {
+            bmobListener.onError(e);
         }
     }
 

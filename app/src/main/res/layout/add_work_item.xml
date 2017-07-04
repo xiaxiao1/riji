@@ -7,13 +7,18 @@
         android:layout_height="wrap_content"
         android:text="添加一条计划"
         android:gravity="center_horizontal"
+        android:layout_marginTop="16dp"
         />
     <EditText
         android:id="@+id/edit_et"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="120dp"
         android:hint="干点啥好呢"
+        android:textColorHint="@color/dark_level33"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:layout_marginTop="16dp"
+        android:background="@null"
         />
 
     <Button
@@ -23,6 +28,9 @@
         android:text="确定"
         android:layout_gravity="right"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="4dp"
+        android:background="@null"
         />
 
 </LinearLayout>

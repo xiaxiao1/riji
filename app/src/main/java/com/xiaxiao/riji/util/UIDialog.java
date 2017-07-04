@@ -1,12 +1,15 @@
 package com.xiaxiao.riji.util;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 
 import com.xiaxiao.riji.Listener.RiJiCallback;
 import com.xiaxiao.riji.R;
+import com.xiaxiao.riji.bean.WorkItem;
 
 
 /**
@@ -181,6 +185,12 @@ public class UIDialog {
         public void onItemClick(int index);
     }
 
+    /**
+     * 展示添加计划项目
+     * @param context
+     * @param riJiCallback
+     * @return
+     */
     public static Dialog showAddWorkItem(Context context, final RiJiCallback riJiCallback) {
         final Dialog dialog = new Dialog(context);
         View v = LayoutInflater.from(context).inflate(R.layout.add_work_item, null);
@@ -208,6 +218,52 @@ public class UIDialog {
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog.getWindow().setAttributes(lp);
+
+        return dialog;
+    }
+
+    /**
+     * 展示计划项完成设置
+     * @param context
+     * @param riJiCallback
+     * @return
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static Dialog showFinishWorkItemDialog(Context context, final RiJiCallback riJiCallback) {
+        final Dialog dialog = new Dialog(context);
+        View v = LayoutInflater.from(context).inflate(R.layout.finish_work_dialog, null);
+
+        final TextView on_tv= (TextView) v.findViewById(R.id.finish_on_tv);
+        final TextView off_tv = (TextView) v.findViewById(R.id.finish_off_tv);
+
+        on_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                riJiCallback.handle(WorkItem.WORK_ITEM_STATE_FINISH);
+                dialog.dismiss();
+            }
+        });
+        off_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                riJiCallback.handle(WorkItem.WORK_ITEM_STATE_UNFINISH);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(v);
+        dialog.getWindow().getDecorView().setLayoutParams(new ViewGroup.LayoutParams(ViewGroup
+                .LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        dialog.show();
+
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
+//        dialog.getWindow().setBackgroundDrawable(null);
+        //这一句可以设置dialog没有默认的白色边框底
+        dialog.getWindow().getDecorView().setBackground(null);
 
         return dialog;
     }

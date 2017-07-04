@@ -1,6 +1,8 @@
 package com.xiaxiao.riji.activity.home;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -77,6 +79,7 @@ public class HomeActivity extends BaseActivity {
                 startActivity(new Intent(HomeActivity.this, DayWorksActivity.class));
             }
         });
+//        img.setColorFilter(Color.GRAY, PorterDuff.Mode.ADD);
 
     }
 
@@ -93,7 +96,7 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onError(BmobException e) {
-
+                XiaoUtil.l("error:"+e.getMessage());
             }
         });
     }
@@ -109,6 +112,7 @@ public class HomeActivity extends BaseActivity {
                 Intent intent=new Intent(HomeActivity.this, TodayWorkActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("today",todayWork);
+                intent.putExtra("istoday", true);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

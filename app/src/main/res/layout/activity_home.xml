@@ -29,7 +29,17 @@
         android:layout_centerInParent="true"
         android:scaleType="centerCrop"
         app:cornerRadius="150dp"
-        android:src="@drawable/xx"
+        android:src="@drawable/home_img"
+        />
+    <com.xiaxiao.riji.customview.roundcorner.RoundCornerImageView
+
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerInParent="true"
+        android:scaleType="centerCrop"
+        app:cornerRadius="150dp"
+        android:src="@drawable/black_bg"
+        android:alpha="0.4"
         />
 
     <View
@@ -52,7 +62,7 @@
             android:id="@+id/day_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="24"
+            android:text=""
             android:textSize="148sp"
             android:textColor="#ffffff"
             android:textStyle="bold"
@@ -61,7 +71,7 @@
             android:id="@+id/year_month_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="20177"
+            android:text="逝者如斯"
             android:textSize="18sp"
             android:textColor="#ffffff"
             android:textStyle="bold"

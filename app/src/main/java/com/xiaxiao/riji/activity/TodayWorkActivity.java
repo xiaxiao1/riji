@@ -1,9 +1,13 @@
 package com.xiaxiao.riji.activity;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -33,17 +37,37 @@ public class TodayWorkActivity extends BaseActivity {
     DayWork todayWork;
     List<WorkItem> workItemList;
     WorkItemAdapter workItemAdapter;
+    //是否是要显示今天当天的items
+    boolean isToday=false;
 
     int i=0;
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_work);
-        setBarTitle("Time so Fast");
         setRightImage(-1);
         setRefreshEnable(false);
         todayWork=(DayWork) getIntent().getExtras().getSerializable("today");
-
+        isToday = getIntent().getBooleanExtra("istoday", false);
+        String[] dateStr = todayWork.getDate().split("\\.");
+        String titleStr=dateStr[0]+"年"+dateStr[1]+"月"+dateStr[2]+"日";
+        if (isToday) {
+            addImg.setVisibility(View.VISIBLE);
+            titleStr = titleStr + " 今天";
+        } else {
+            addImg.setVisibility(View.GONE);
+        }
+        setBarTitle(titleStr);
+        setLeftImage(R.drawable.left_gray);
+//        getmCustomTopBar().getLeftImageView().setBackgroundResource(R.drawable.finish_work_off_bg);
+        getmCustomTopBar().getLeftImageView().setPadding(28, 0, 28, 0);
+        setTitleLeftAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TodayWorkActivity.this.finish();
+            }
+        });
         getDatas();
 
 
@@ -56,12 +80,14 @@ public class TodayWorkActivity extends BaseActivity {
                 UIDialog.showAddWorkItem(TodayWorkActivity.this, new RiJiCallback() {
                     @Override
                     public void handle(Object object) {
+                        addImg.setEnabled(false);
                         addItems((String)object);
                     }
                 });
             }
 
         });
+        changeItemStatus(isToday);
 
     }
 
@@ -98,8 +124,14 @@ public class TodayWorkActivity extends BaseActivity {
     @Override
     public void initViews() {
         addImg = (ImageView) findViewById(R.id.add_img);
-        addImg.setImageResource(R.drawable.tab2);
         listview = (ListView) findViewById(R.id.listview);
+        /*View v = new View(this);
+        ViewGroup.LayoutParams params = v.getLayoutParams();
+        params.height = 160;
+        v.setLayoutParams(params);
+        listview.addFooterView(v);*/
+
+
     }
 
 
@@ -120,21 +152,54 @@ public class TodayWorkActivity extends BaseActivity {
                     public void onSuccess(Object object) {
                         stopRefresh();
                         XiaoUtil.customToast(TodayWorkActivity.this,"添加成功");
+                        addImg.setEnabled(true);
                         getDatas();
                     }
 
                     @Override
                     public void onError(BmobException e) {
-
+                        addImg.setEnabled(true);
                     }
                 });
             }
 
             @Override
             public void onError(BmobException e) {
-
+                addImg.setEnabled(true);
             }
         });
 
+    }
+
+    public void changeItemStatus(boolean isToday) {
+        if (isToday) {
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    UIDialog.showFinishWorkItemDialog(TodayWorkActivity.this, new RiJiCallback() {
+                        @Override
+                        public void handle(Object object) {
+                            WorkItem workItem = workItemList.get(position);
+                            int status = (int) object;
+                            if (status!=workItem.getFinish()) {
+                                workItem.setFinish(status);
+                                riJiBmobServer.updateWorkItem(workItem, new BmobListener() {
+                                    @Override
+                                    public void onSuccess(Object object) {
+                                        XiaoUtil.customToast(TodayWorkActivity.this,"更新成功");
+                                        getDatas();//refresh
+                                    }
+
+                                    @Override
+                                    public void onError(BmobException e) {
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        }
     }
 }

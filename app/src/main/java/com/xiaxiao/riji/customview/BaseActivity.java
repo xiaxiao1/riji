@@ -104,11 +104,15 @@ public abstract  class BaseActivity extends AppCompatActivity {
 
     }
 
+    public CustomTopBar getmCustomTopBar() {
+        return mCustomTopBar;
+    }
     public void setLeftImage(int drawableId) {
         if (drawableId<0) {
             mCustomTopBar.getLeftImageView().setVisibility(View.GONE);
             return;
         }
+        mCustomTopBar.getLeftImageView().setVisibility(View.VISIBLE);
         mCustomTopBar.setLeftImg(drawableId);
     }
     public void setRightImage(int drawableId) {

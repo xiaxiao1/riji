@@ -3,13 +3,15 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="toast_bg">#e1ced4</color>
+    <color name="toast_bg">#f9d8e2</color>
     <color name="button_bg">#fa89ba</color>
+    <color name="finish_on">#88dc87</color>
 
     <color name="main_theme_color">#FC6450</color>
     <color name="second_theme_color">#57A8DC</color>
-    <color name="dark_leve11">#1F1E1E</color>
+    <color name="dark_leve11">#3b3939</color>
     <color name="dark_level2">#696868</color>
     <color name="dark_level33">#CDCBCB</color>
     <color name="dark_level3">#f4f3f3</color>
+    <color name="light_whrite">#f9f9f9</color>
 </resources>
