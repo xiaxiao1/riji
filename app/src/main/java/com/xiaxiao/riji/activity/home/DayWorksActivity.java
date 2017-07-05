@@ -35,15 +35,23 @@ public class DayWorksActivity extends BaseActivity{
         setRefreshEnable(false);
         setBarTitle("不积硅步 无以至千里");
         setLeftImage(R.drawable.left_gray);
+        setRightImage(R.drawable.setting);
 //        getmCustomTopBar().getLeftImageView().setBackgroundResource(R.drawable.finish_work_off_bg);
         getmCustomTopBar().getLeftImageView().setPadding(28, 0, 28, 0);
-        setTitleLeftAction(new View.OnClickListener() {
+        getmCustomTopBar().getRightImageView().setPadding(30, 0, 30, 0);
+            setTitleLeftAction(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DayWorksActivity.this.finish();
+                }
+            });
+        setTitleRightAction(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DayWorksActivity.this.finish();
+                startActivity(new Intent(DayWorksActivity.this,SettingActivity.class));
             }
         });
-        riJiBmobServer.getMyDayWorks(-1,new BmobListener() {
+        riJiBmobServer.getMyDayWorks(-1,riJiBmobServer.getLocalUser(),new BmobListener() {
             @Override
             public void onSuccess(Object object) {
                 stopRefresh();

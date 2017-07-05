@@ -19,6 +19,7 @@ public class DayWork extends BmobObject {
     String note;
 
 
+    RiJiUser owner;
     BmobRelation workItems;
 
     //完成度
@@ -62,5 +63,13 @@ public class DayWork extends BmobObject {
 
     public void setProgress(String progress) {
         this.progress = progress;
+    }
+
+    public RiJiUser getOwner() {
+        return owner;
+    }
+
+    public void setOwner(RiJiUser owner) {
+        this.owner = owner;
     }
 }

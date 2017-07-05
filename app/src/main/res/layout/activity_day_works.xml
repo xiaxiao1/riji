@@ -5,7 +5,7 @@
     android:id="@+id/activity_day_works"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_level3"
+    android:background="#ffffff"
 
     tools:context="com.xiaxiao.riji.activity.home.DayWorksActivity">
     <ListView

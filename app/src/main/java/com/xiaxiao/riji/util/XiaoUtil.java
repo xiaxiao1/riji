@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.xiaxiao.riji.R;
 import com.xiaxiao.riji.customview.BaseActivity;
+import com.xiaxiao.riji.thirdframework.bmob.BmobIniter;
 
 import java.io.File;
 import java.text.Format;
@@ -400,4 +401,9 @@ public class XiaoUtil {
         return (int) (pxValue / scale + 0.5f);
     }
 
+    public static void useBmob(Context context) {
+        BmobIniter.init(context);
+        BmobIniter.initPush(context);
+
+    }
 }

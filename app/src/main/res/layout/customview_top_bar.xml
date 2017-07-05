@@ -37,7 +37,7 @@
         android:layout_marginRight="8dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <ImageView

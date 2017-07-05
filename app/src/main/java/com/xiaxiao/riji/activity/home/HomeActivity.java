@@ -36,7 +36,7 @@ public class HomeActivity extends BaseActivity {
         setRefreshEnable(false);
         setCustomTopBarVisibility(View.GONE);
 
-        riJiBmobServer.getMyDayWorks(1, new BmobListener() {
+        riJiBmobServer.getMyDayWorks(1,riJiBmobServer.getLocalUser(), new BmobListener() {
             @Override
             public void onSuccess(Object object) {
                 List<DayWork> dayWorkList = (List<DayWork>) object;
@@ -87,6 +87,7 @@ public class HomeActivity extends BaseActivity {
     public void createNewday() {
         todayWork = new DayWork();
         todayWork.setDate(XiaoUtil.getFormatCurrentTime(""));
+        todayWork.setOwner(riJiBmobServer.getLocalUser());
         riJiBmobServer.addDayWork(todayWork, new BmobListener() {
             @Override
             public void onSuccess(Object object) {

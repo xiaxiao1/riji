@@ -62,10 +62,19 @@ public class RiJiBmobServer {
         });
     }
 
-    public void getMyDayWorks(int limit, final BmobListener bmobListener) {
+    /**
+     * 可以根据RiJiUser对象 获取对应的daywork
+     * @param limit
+     * @param owner
+     * @param bmobListener
+     */
+    public void getMyDayWorks(int limit,RiJiUser owner, final BmobListener bmobListener) {
 //        addListener(bmobListener);
         BmobQuery<DayWork> query = new BmobQuery<>();
         query.order("-createdAt");
+        query.addWhereEqualTo("owner", owner);
+        query.include("owner");
+
 //        query.include("workItems"); include can not use with BmobRelation
         if (limit>0) {
             query.setLimit(limit);
@@ -134,6 +143,14 @@ public class RiJiBmobServer {
 
     public RiJiUser getLocalUser() {
         return BmobUser.getCurrentUser(RiJiUser.class);
+    }
+
+    /**
+     * 退出登录
+     */
+    public RiJiUser logout() {
+        BmobUser.logOut();   //清除缓存用户对象
+        return BmobUser.getCurrentUser(RiJiUser.class); // 现在的currentUser是null了
     }
 
     public void handleResult(Object obj, BmobException e,BmobListener bmobListener) {

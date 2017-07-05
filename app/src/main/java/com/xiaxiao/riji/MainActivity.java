@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.xiaxiao.riji.activity.home.HomeActivity;
+import com.xiaxiao.riji.activity.home.RiJiStartUpActivity;
 import com.xiaxiao.riji.customview.BaseActivity;
 import com.xiaxiao.riji.thirdframework.bmob.BmobIniter;
 
@@ -17,7 +18,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-useBmob();
+
 
     }
 
@@ -32,13 +33,9 @@ useBmob();
     }
 
     public void toTestactivity(View view) {
-        startActivity(new Intent(this, HomeActivity.class));
+        startActivity(new Intent(this, RiJiStartUpActivity.class));
 
     }
 
-    public void useBmob() {
-        BmobIniter.init(getApplicationContext());
-        BmobIniter.initPush(getApplicationContext());
 
-    }
 }

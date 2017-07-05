@@ -51,7 +51,7 @@ public class CustomTopBar extends LinearLayout {
 
     }
     public void setRightImg(int drawableId) {
-        left_img.setImageResource(drawableId);
+        right_img.setImageResource(drawableId);
 
     }
 
