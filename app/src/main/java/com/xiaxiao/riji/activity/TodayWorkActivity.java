@@ -47,7 +47,7 @@ public class TodayWorkActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_work);
         setRightImage(-1);
-        setRefreshEnable(false);
+//        setRefreshEnable(false);
         todayWork=(DayWork) getIntent().getExtras().getSerializable("today");
         isToday = getIntent().getBooleanExtra("istoday", false);
         String[] dateStr = todayWork.getDate().split("\\.");
@@ -68,6 +68,7 @@ public class TodayWorkActivity extends BaseActivity {
                 TodayWorkActivity.this.finish();
             }
         });
+//        startRefresh();
         getDatas();
 
 
@@ -111,13 +112,6 @@ public class TodayWorkActivity extends BaseActivity {
                     } else {
                         workItemAdapter.update(workItemList);
                     }
-                    /*int f = 0;
-                    for (WorkItem w : workItemList) {
-                        if (w.getFinish()==WorkItem.WORK_ITEM_STATE_FINISH) {
-                            f++;
-                        }
-                    }
-                    setRig*/
                 }
                 stopRefresh();
             }
@@ -132,12 +126,7 @@ public class TodayWorkActivity extends BaseActivity {
     public void initViews() {
         addImg = (ImageView) findViewById(R.id.add_img);
         listview = (ListView) findViewById(R.id.listview);
-        /*View v = new View(this);
-        ViewGroup.LayoutParams params = v.getLayoutParams();
-        params.height = 160;
-        v.setLayoutParams(params);
-        listview.addFooterView(v);*/
-
+        fixScrollConflict(listview);
 
     }
 

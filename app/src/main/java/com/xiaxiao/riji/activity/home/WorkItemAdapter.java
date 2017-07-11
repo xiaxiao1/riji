@@ -47,6 +47,9 @@ public class WorkItemAdapter extends MyAdapter {
         holder.work_tv.setText(workItem.getWork());
         holder.status_tv.setText(statusMap.get(workItem.getFinish()));
         holder.status_tv.setBackgroundResource(statusBgMap.get(workItem.getFinish()));
+        if (position+1==datas.size()) {
+            convertView.setPadding(0,0,0,260);
+        }
 
         return convertView;
     }

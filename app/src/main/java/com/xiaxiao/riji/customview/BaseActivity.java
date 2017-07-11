@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.xiaxiao.riji.R;
 import com.xiaxiao.riji.runtimepermission.RuntimePermissionsManager;
@@ -41,6 +43,7 @@ public abstract  class BaseActivity extends AppCompatActivity {
         View v=LayoutInflater.from(this).inflate(R.layout.activity_base, linearLayout, true);
         viewGroup.addView(linearLayout);
         mSwipeRefreshLayout = (SwipeRefreshLayout) v.findViewById(R.id.activity_base);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent,R.color.finish_on);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -159,4 +162,32 @@ public abstract  class BaseActivity extends AppCompatActivity {
     public RiJiBmobServer getBmobServer() {
         return riJiBmobServer;
     }
+
+    /**
+     * 解决ListView和SwipeRefreshLayout的滑动冲突，如果当前页面有ListView的话
+     * @param listView
+     */
+    public void fixScrollConflict(ListView listView) {
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+                boolean enable = false;
+                if(view != null && view.getChildCount() > 0){
+                    // check if the first item of the list is visible
+                    boolean firstItemVisible = view.getFirstVisiblePosition() == 0;
+                    // check if the top of the first item is visible
+                    boolean topOfFirstItemVisible = view.getChildAt(0).getTop() == 0;
+                    // enabling or disabling the refresh layout
+                    enable = firstItemVisible && topOfFirstItemVisible;
+                }
+                setRefreshEnable(enable);
+            }});
+    }
+
 }

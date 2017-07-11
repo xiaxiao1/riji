@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -31,12 +32,11 @@ public class DayWorksActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_day_works);
 
-//        startRefresh();
-        setRefreshEnable(false);
+//
+//        setRefreshEnable(false);
         setBarTitle("不积硅步 无以至千里");
         setLeftImage(R.drawable.left_gray);
         setRightImage(R.drawable.setting);
-//        getmCustomTopBar().getLeftImageView().setBackgroundResource(R.drawable.finish_work_off_bg);
         getmCustomTopBar().getLeftImageView().setPadding(28, 0, 28, 0);
         getmCustomTopBar().getRightImageView().setPadding(30, 0, 30, 0);
             setTitleLeftAction(new View.OnClickListener() {
@@ -51,6 +51,18 @@ public class DayWorksActivity extends BaseActivity{
                 startActivity(new Intent(DayWorksActivity.this,SettingActivity.class));
             }
         });
+
+        getDatas();
+
+    }
+
+    @Override
+    public void onRefreshing() {
+        getDatas();
+    }
+
+    public void getDatas() {
+        startRefresh();
         riJiBmobServer.getMyDayWorks(-1,riJiBmobServer.getLocalUser(),new BmobListener() {
             @Override
             public void onSuccess(Object object) {
@@ -58,20 +70,15 @@ public class DayWorksActivity extends BaseActivity{
                 dayWorkList = (List<DayWork>) object;
                 dayWorkAdapter = new DayWorkAdapter(DayWorksActivity.this, dayWorkList);
                 listView.setAdapter(dayWorkAdapter);
+                stopRefresh();
             }
 
             @Override
             public void onError(BmobException e) {
-
+                stopRefresh();
             }
         });
     }
-
-    @Override
-    public void onRefreshing() {
-        stopRefresh();
-    }
-
     @Override
     public void initViews() {
         listView = (ListView) findViewById(R.id.listview);
@@ -97,5 +104,8 @@ public class DayWorksActivity extends BaseActivity{
                 startActivity(intent);
             }
         });
+
+        fixScrollConflict(listView);
+
     }
 }
