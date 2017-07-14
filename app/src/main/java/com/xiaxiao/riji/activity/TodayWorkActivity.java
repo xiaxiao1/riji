@@ -1,35 +1,27 @@
 package com.xiaxiao.riji.activity;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.xiaxiao.riji.Listener.RiJiCallback;
 import com.xiaxiao.riji.R;
-import com.xiaxiao.riji.activity.home.DayWorksActivity;
 import com.xiaxiao.riji.activity.home.WorkItemAdapter;
 import com.xiaxiao.riji.bean.DayWork;
 import com.xiaxiao.riji.bean.WorkItem;
 import com.xiaxiao.riji.customview.BaseActivity;
 import com.xiaxiao.riji.thirdframework.bmob.BmobListener;
-import com.xiaxiao.riji.thirdframework.bmob.RiJiBmobServer;
 import com.xiaxiao.riji.util.UIDialog;
 import com.xiaxiao.riji.util.XiaoUtil;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.datatype.BmobRelation;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
 
 public class TodayWorkActivity extends BaseActivity {
     private ImageView addImg;
@@ -47,7 +39,6 @@ public class TodayWorkActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_today_work);
         setRightImage(-1);
-//        setRefreshEnable(false);
         todayWork=(DayWork) getIntent().getExtras().getSerializable("today");
         isToday = getIntent().getBooleanExtra("istoday", false);
         String[] dateStr = todayWork.getDate().split("\\.");
@@ -60,12 +51,58 @@ public class TodayWorkActivity extends BaseActivity {
         }
         setBarTitle(titleStr);
         setLeftImage(R.drawable.left_gray);
-//        getmCustomTopBar().getLeftImageView().setBackgroundResource(R.drawable.finish_work_off_bg);
-        getmCustomTopBar().getLeftImageView().setPadding(28, 0, 28, 0);
+//        getmCustomTopBar().getRightTextView().setText("不可见");
+//        getmCustomTopBar().getRightTextView().setVisibility(View.VISIBLE);
+//        getmCustomTopBar().getRightTextView().setPadding(4,4,4,4);
+        //如果是本用户的计划，
+        if (todayWork.getOwner().getObjectId().equals(riJiBmobServer.getLocalUser().getObjectId()
+        )) {
+            getmCustomTopBar().getRightImageView().setVisibility(View.VISIBLE);
+        } else {
+            getmCustomTopBar().getRightImageView().setVisibility(View.INVISIBLE);
+        }
+        getmCustomTopBar().getRightImageView().setImageResource(R.drawable.can_see_off);
+        if (todayWork.getVisible()==DayWork.DAYWORK_VISIBLE) {
+            getmCustomTopBar().getRightImageView().setImageResource(R.drawable.can_see_on);
+        }
+        getmCustomTopBar().getRightImageView().setPadding(28, 0, 28, 0);
+        getmCustomTopBar().getLeftImageView().setPadding(32, 0, 32, 0);
         setTitleLeftAction(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TodayWorkActivity.this.finish();
+            }
+        });
+        setTitleRightAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                XiaoUtil.customToast(TodayWorkActivity.this,"hahahahaha tt");
+                UIDialog.showDayworkVisibleDialog(TodayWorkActivity.this, new RiJiCallback() {
+                    @Override
+                    public void handle(Object object) {
+                        final int v = (int) object;
+                        if (v!=todayWork.getVisible()) {
+                            todayWork.setVisible(v);
+                            riJiBmobServer.updateDayWork(todayWork, new BmobListener() {
+                                @Override
+                                public void onSuccess(Object object) {
+                                    XiaoUtil.customToast(TodayWorkActivity.this,"设置成功");
+                                    if (v == DayWork.DAYWORK_INVISIBLE) {
+                                        getmCustomTopBar().getRightImageView().setImageResource(R
+                                                .drawable.can_see_off);
+                                    } else {
+                                        getmCustomTopBar().getRightImageView().setImageResource(R.drawable.can_see_on);
+                                    }
+                                }
+
+                                @Override
+                                public void onError(BmobException e) {
+                                    XiaoUtil.customToast(TodayWorkActivity.this,"修改失败，请稍候再试");
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
 //        startRefresh();
@@ -127,6 +164,7 @@ public class TodayWorkActivity extends BaseActivity {
         addImg = (ImageView) findViewById(R.id.add_img);
         listview = (ListView) findViewById(R.id.listview);
         fixScrollConflict(listview);
+//        setEmptyListView(listview,"暂无数据");
 
     }
 

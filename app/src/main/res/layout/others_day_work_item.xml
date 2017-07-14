@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+
+    <ImageView
+        android:id="@+id/user_head_img"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/xx"
+        android:scaleType="centerCrop"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="8dp"
+        />
+    <TextView
+        android:id="@+id/user_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/user_head_img"
+        android:gravity="center_vertical"
+        android:text="name"
+        android:textSize="12sp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        />
+    <TextView
+        android:id="@+id/date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:text="2017年07月"
+        android:textSize="10sp"
+        android:textColor="@color/dark_level2"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        />
+
+    <LinearLayout
+        android:id="@+id/items_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/user_head_img"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/gray_solid_bg"
+        android:layout_marginBottom="16dp"
+        >
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            android:layout_weight="1"
+            >
+            <TextView
+                android:id="@+id/day_work_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="80dp"
+                android:gravity="center_vertical"
+                android:maxLines="4"
+                android:ellipsize="end"
+                android:text="2017.07.01"
+                android:textSize="14sp"
+                android:textColor="@color/dark_level2"
+                android:layout_below="@id/day_tv"
+                android:padding="16dp"
+                />
+            <TextView
+                android:id="@+id/progress_note_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingBottom="2dp"
+                android:textSize="8sp"
+                android:textColor="@color/dark_level33"
+                android:text="共78项，完成7项"
+                />
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/progress_tv"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_below="@id/items_ll"
+            android:text="00%"
+            android:textSize="12sp"
+            android:background="@drawable/whrite_solid_circle_border_bg"
+            android:gravity="center"
+            android:layout_marginRight="8dp"
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>

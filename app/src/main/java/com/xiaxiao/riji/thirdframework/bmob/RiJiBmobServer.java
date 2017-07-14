@@ -87,6 +87,32 @@ public class RiJiBmobServer {
         });
     }
 
+    /**
+     * 查看其他人的每日计划
+     * @param limit
+     * @param owner
+     * @param bmobListener
+     */
+    public void getOthersDayWorks(int limit,RiJiUser owner, final BmobListener bmobListener) {
+//        addListener(bmobListener);
+        BmobQuery<DayWork> query = new BmobQuery<>();
+        query.order("-createdAt");
+        query.addWhereNotEqualTo("owner", owner);
+        query.addWhereEqualTo("visible", DayWork.DAYWORK_VISIBLE);
+        query.include("owner");
+
+//        query.include("workItems"); include can not use with BmobRelation
+        if (limit>0) {
+            query.setLimit(limit);
+        }
+        query.findObjects(new FindListener<DayWork>() {
+            @Override
+            public void done(List<DayWork> list, BmobException e) {
+                handleResult(list,e,bmobListener);
+            }
+        });
+    }
+
 
     public void addWorkItem(WorkItem workItem, final BmobListener b) {
 //        addListener(b);

@@ -10,6 +10,9 @@ import cn.bmob.v3.datatype.BmobRelation;
  */
 
 public class DayWork extends BmobObject {
+    public static final int DAYWORK_VISIBLE=1;//可见
+    public static final int DAYWORK_INVISIBLE=0;//不可见
+
     String localId;
 
     //yyyy:mm:dd
@@ -24,6 +27,8 @@ public class DayWork extends BmobObject {
 
     //完成度
     String progress;
+
+    int visible = DAYWORK_INVISIBLE;
 
     public String getDate() {
         return date;
@@ -71,5 +76,13 @@ public class DayWork extends BmobObject {
 
     public void setOwner(RiJiUser owner) {
         this.owner = owner;
+    }
+
+    public int getVisible() {
+        return visible;
+    }
+
+    public void setVisible(int visible) {
+        this.visible = visible;
     }
 }

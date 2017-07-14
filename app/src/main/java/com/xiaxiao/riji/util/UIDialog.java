@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.xiaxiao.riji.Listener.RiJiCallback;
 import com.xiaxiao.riji.R;
+import com.xiaxiao.riji.bean.DayWork;
 import com.xiaxiao.riji.bean.WorkItem;
 
 
@@ -259,6 +260,52 @@ public class UIDialog {
 
         WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
         lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(lp);
+//        dialog.getWindow().setBackgroundDrawable(null);
+        //这一句可以设置dialog没有默认的白色边框底
+        dialog.getWindow().getDecorView().setBackground(null);
+
+        return dialog;
+    }
+
+    /**
+     * 展示设置计划可见与否
+     * @param context
+     * @param riJiCallback
+     * @return
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public static Dialog showDayworkVisibleDialog(Context context, final RiJiCallback riJiCallback) {
+        final Dialog dialog = new Dialog(context);
+        View v = LayoutInflater.from(context).inflate(R.layout.set_work_visible_dialog, null);
+
+        final TextView on_tv= (TextView) v.findViewById(R.id.finish_on_tv);
+        final TextView off_tv = (TextView) v.findViewById(R.id.finish_off_tv);
+
+        on_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                riJiCallback.handle(DayWork.DAYWORK_VISIBLE);
+                dialog.dismiss();
+            }
+        });
+        off_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                riJiCallback.handle(DayWork.DAYWORK_INVISIBLE);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(v);
+        dialog.getWindow().getDecorView().setLayoutParams(new ViewGroup.LayoutParams(ViewGroup
+                .LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        dialog.show();
+
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog.getWindow().setAttributes(lp);
 //        dialog.getWindow().setBackgroundDrawable(null);

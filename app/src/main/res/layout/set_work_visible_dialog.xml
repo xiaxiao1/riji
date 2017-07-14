@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="16dp"
+    android:paddingBottom="40dp"
+    android:background="@drawable/dialog_whrite_solid_circle_bg"
+    android:gravity="center_horizontal"
+
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="设置今天的计划陌生人可看"
+        android:textColor="@color/dark_level2"
+        android:textSize="12sp"
+        android:layout_marginLeft="16dp"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+
+        >
+
+        <View
+            android:id="@+id/mid_v"
+            android:layout_width="0.5dp"
+            android:layout_height="0.5dp"
+            android:layout_centerHorizontal="true"
+            />
+
+        <ImageView
+            android:id="@+id/finish_off_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_toLeftOf="@id/mid_v"
+            android:src="@drawable/can_see_off"
+            android:layout_marginRight="40dp"
+            android:padding="20dp"
+            />
+        <ImageView
+            android:id="@+id/finish_on_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_toRightOf="@id/mid_v"
+            android:src="@drawable/can_see_on"
+            android:layout_marginLeft="40dp"
+            android:padding="20dp"
+            />
+        <TextView
+            android:id="@+id/finish_off_tv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="不可见"
+            android:textColor="@color/dark_level33"
+            android:textSize="12sp"
+            android:gravity="bottom|center"
+            android:layout_alignLeft="@id/finish_off_img"
+            />
+        <TextView
+            android:id="@+id/finish_on_tv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="可见"
+            android:textColor="@color/finish_on"
+            android:textSize="12sp"
+            android:gravity="bottom|center"
+            android:layout_alignRight="@id/finish_on_img"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

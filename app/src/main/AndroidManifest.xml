@@ -78,6 +78,8 @@
         <activity android:name=".activity.home.LoginActivity" />
         <activity android:name=".activity.home.SettingActivity">
         </activity>
+        <activity android:name=".activity.home.OthersDayworkActivity">
+        </activity>
     </application>
 
 </manifest>

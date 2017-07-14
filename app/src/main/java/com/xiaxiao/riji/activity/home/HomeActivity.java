@@ -1,8 +1,6 @@
 package com.xiaxiao.riji.activity.home;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -16,7 +14,6 @@ import com.xiaxiao.riji.customview.roundcorner.RoundCornerImageView;
 import com.xiaxiao.riji.thirdframework.bmob.BmobListener;
 import com.xiaxiao.riji.util.XiaoUtil;
 
-import java.util.Date;
 import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
@@ -27,15 +24,26 @@ public class HomeActivity extends BaseActivity {
     private TextView dayTv;
     private TextView yearMonthTv;
     private TextView pastTime_tv;
+    private TextView look_tv;
     DayWork todayWork;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        setRefreshEnable(false);
+//        setRefreshEnable(false);
         setCustomTopBarVisibility(View.GONE);
+        startRefresh();
+        getDatas();
 
+    }
+
+    @Override
+    public void onRefreshing() {
+        getDatas();
+    }
+
+    public void getDatas() {
         riJiBmobServer.getMyDayWorks(1,riJiBmobServer.getLocalUser(), new BmobListener() {
             @Override
             public void onSuccess(Object object) {
@@ -48,6 +56,7 @@ public class HomeActivity extends BaseActivity {
                     if (XiaoUtil.format(todayWork.getDate()).compareTo(XiaoUtil.getToday()) < 0) {
                         createNewday();
                     } else {
+                        stopRefresh();
                         showToday();
                     }
                 }
@@ -55,15 +64,9 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void onError(BmobException e) {
-
+                stopRefresh();
             }
         });
-
-    }
-
-    @Override
-    public void onRefreshing() {
-
     }
 
     public void initViews() {
@@ -72,6 +75,7 @@ public class HomeActivity extends BaseActivity {
         dayTv = (TextView) findViewById(R.id.day_tv);
         yearMonthTv = (TextView) findViewById(R.id.year_month_tv);
         pastTime_tv = (TextView) findViewById(R.id.past_time_tv);
+        look_tv = (TextView) findViewById(R.id.look_tv);
 
         pastTime_tv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,8 +83,13 @@ public class HomeActivity extends BaseActivity {
                 startActivity(new Intent(HomeActivity.this, DayWorksActivity.class));
             }
         });
-//        img.setColorFilter(Color.GRAY, PorterDuff.Mode.ADD);
-
+        look_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                XiaoUtil.customToast(HomeActivity.this,"hahahahaha tt");
+                startActivity(new Intent(HomeActivity.this, OthersDayworkActivity.class));
+            }
+        });
     }
 
 
@@ -92,11 +101,13 @@ public class HomeActivity extends BaseActivity {
             @Override
             public void onSuccess(Object object) {
                 todayWork.setObjectId((String)object);
+                stopRefresh();
                 showToday();
             }
 
             @Override
             public void onError(BmobException e) {
+                stopRefresh();
                 XiaoUtil.l("error:"+e.getMessage());
             }
         });

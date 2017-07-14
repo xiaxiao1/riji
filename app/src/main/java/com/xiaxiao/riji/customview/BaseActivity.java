@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.xiaxiao.riji.R;
 import com.xiaxiao.riji.runtimepermission.RuntimePermissionsManager;
@@ -83,11 +84,11 @@ public abstract  class BaseActivity extends AppCompatActivity {
     }
 
     public void setTitleLeftAction(View.OnClickListener onClickListener) {
-        mCustomTopBar.getLeftImageView().setOnClickListener(onClickListener);
+        mCustomTopBar.getLeftTitleLl().setOnClickListener(onClickListener);
 
     }
     public void setTitleRightAction(View.OnClickListener onClickListener) {
-        mCustomTopBar.getRightImageView().setOnClickListener(onClickListener);
+        mCustomTopBar.getRightTitleLl().setOnClickListener(onClickListener);
     }
 
     public void setBarTitle(String title) {
@@ -95,7 +96,7 @@ public abstract  class BaseActivity extends AppCompatActivity {
     }
 
     public void startRefresh() {
-        runOnUiThread(new Runnable() {
+       /* runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (!mSwipeRefreshLayout.isRefreshing()) {
@@ -103,7 +104,15 @@ public abstract  class BaseActivity extends AppCompatActivity {
 //            mSwipeRefreshLayout.se
                 }
             }
-        });
+        });*/
+        if (!mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.post(new Runnable() {
+                @Override public void run() {
+                    mSwipeRefreshLayout.setRefreshing(true);
+                }
+            });
+        }
+
 
     }
 
@@ -168,6 +177,7 @@ public abstract  class BaseActivity extends AppCompatActivity {
      * @param listView
      */
     public void fixScrollConflict(ListView listView) {
+
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
             @Override
@@ -186,8 +196,14 @@ public abstract  class BaseActivity extends AppCompatActivity {
                     // enabling or disabling the refresh layout
                     enable = firstItemVisible && topOfFirstItemVisible;
                 }
-                setRefreshEnable(enable);
+                setRefreshEnable(totalItemCount==0||enable);
             }});
+    }
+
+    public void setEmptyListView(ListView listView ,String s) {
+        TextView textView = new TextView(this);
+        textView.setText(s);
+        listView.setEmptyView(textView);
     }
 
 }

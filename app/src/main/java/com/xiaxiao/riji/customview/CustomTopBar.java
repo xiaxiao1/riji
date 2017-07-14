@@ -39,6 +39,7 @@ public class CustomTopBar extends LinearLayout {
         left_img = (ImageView) root.findViewById(R.id.left_img);
         right_img = (ImageView) root.findViewById(R.id.right_img);
         middle_tv = (TextView) root.findViewById(R.id.middle_tv);
+        right_tv = (TextView) root.findViewById(R.id.right_tv);
     }
 
     public void setTitle(String title) {
@@ -63,5 +64,19 @@ public class CustomTopBar extends LinearLayout {
     }
     public ImageView getMiddleImageView() {
         return this.middle_img;
+    }
+
+    public TextView getRightTextView() {
+        return right_tv;
+    }
+
+    public View getRightTitleLl() {
+        return right_ll;
+    }
+    public View getLeftTitleLl() {
+        return left_ll;
+    }
+    public View getMiddleTitleLl() {
+        return middle_ll;
     }
 }

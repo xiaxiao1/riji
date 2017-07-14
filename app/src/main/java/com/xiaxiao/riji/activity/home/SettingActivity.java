@@ -23,7 +23,7 @@ public class SettingActivity extends BaseActivity {
         setRefreshEnable(false);
         setLeftImage(R.drawable.left_gray);
         setBarTitle("嗨，"+riJiBmobServer.getLocalUser().getUsername());
-        getmCustomTopBar().getLeftImageView().setPadding(28, 0, 28, 0);
+        getmCustomTopBar().getLeftImageView().setPadding(32, 0, 32, 0);
         setTitleLeftAction(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

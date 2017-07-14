@@ -13,4 +13,5 @@
     <dimen name="card_height">140dp</dimen>
     <dimen name="user_head_size_level2">32dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="custom_title_height">38dp</dimen>
 </resources>
