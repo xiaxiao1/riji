@@ -51,7 +51,7 @@ public class OthersDayWorkAdapter extends MyAdapter {
         } else {
             holder = (Holder)convertView.getTag();
         }
-//        holder.userHead_img.setImageResource(UserHeadImage.getImageResource(position));
+        holder.userHead_img.setImageResource(UserHeadImage.getImageResource(position));
         holder.username_tv.setText(dayWork.getOwner().getUsername());
         holder.yearMonth_tv.setText(dayWork.getDate());
 
